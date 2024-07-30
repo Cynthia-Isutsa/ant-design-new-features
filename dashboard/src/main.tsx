@@ -10,8 +10,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <ConfigProvider  
     theme ={{
       token: {
-        colorPrimary: "#000000",
-        colorTextBase: "grey",
+        colorPrimary: "#09054d",
+        //colorTextBase: "white",
       },
       components : {
         Checkbox: {
