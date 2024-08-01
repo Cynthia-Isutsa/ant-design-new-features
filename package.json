@@ -1,6 +1,10 @@
 {
   "dependencies": {
     "@ant-design/icons": "^5.4.0",
-    "@ant-design/pro-components": "^2.7.14"
+    "@ant-design/pro-components": "^2.7.14",
+    "faker": "^6.6.6"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.4.1"
   }
 }

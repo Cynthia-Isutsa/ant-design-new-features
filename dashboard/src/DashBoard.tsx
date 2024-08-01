@@ -7,14 +7,34 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import "./styles/dashboard.css";
-import { Button, Card, Col, Divider, Layout, Menu, Row, Space, Typography } from "antd";
+import { Button, Card, Col, Divider, Layout, Menu, Row, Space, Table, Typography } from "antd";
 import { Content, Footer, Header } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import { useState } from "react";
-const { Text, Link } = Typography;
+import {faker} from '@faker-js/faker'
+
+
+const { Text } = Typography;
+
 
 const DashBoard = () => {
   const [collasped, setCollasped] = useState<any>();
+
+  const generateData = () => {
+    const dat = [];
+
+    for (let i = 0; i < 34; i++) {
+      dat.push({
+        id: faker.datatype.number(1000),
+        name: faker.name.fullName(),
+        email: faker.internet.email(),
+        status: Math.random() > 0.5 ? true : false,
+      });
+      return dat;
+    }
+  }
+
+  const data = generateData()
 
   return (
     <Layout className="container">
@@ -155,7 +175,7 @@ const DashBoard = () => {
             </Card>
           </Space>
           <Divider />
-          <Row gutter= {10}>
+          {/* <Row gutter= {10}>
             <Col span={8}>
             <Card>
             <Typography.Title level={1}>Sales Department</Typography.Title>
@@ -166,9 +186,35 @@ const DashBoard = () => {
             </Typography.Paragraph>
             </Card>
             </Col>
-          </Row>
+          </Row> */}
           <Row>
             <Col span={18}>
+            <Table 
+            dataSource={data}
+            columns={[
+              {
+                title: "ID",
+                dataIndex: "id",
+                key: "id" 
+              },
+              {
+                title: "Name",
+                dataIndex: "name",
+                key: "name" 
+
+              },
+              {
+                title: "E-mail",
+                dataIndex: "email",
+                key: "email" 
+              },
+              {
+                title: "Status",
+                dataIndex: "status",
+                key: "status" 
+              }
+            ]}
+            />
             </Col>
           </Row>
         </Content>
