@@ -7,18 +7,40 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import "./styles/dashboard.css";
-import { Button, Card, Col, Divider, Layout, Menu, Row, Space, Table, Typography } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Layout,
+  Menu,
+  Row,
+  Space,
+  Tag,
+  Typography,
+} from "antd";
 import { Content, Footer, Header } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
-import { useState } from "react";
-import {faker} from '@faker-js/faker'
+// import { useState } from "react";
+import { faker } from "@faker-js/faker";
+import React, { useState } from "react";
+import { Divider, Radio, Table } from "antd";
+import type { TableColumnsType } from "antd";
+import { Steps } from "antd";
 
+interface DataType {
+  key: React.Key;
+  name: string;
+  age: number;
+  address: string;
+}
 
 const { Text } = Typography;
 
-
 const DashBoard = () => {
   const [collasped, setCollasped] = useState<any>();
+  const [selectionType, setSelectionType] = useState<"checkbox" | "radio">(
+    "checkbox"
+  );
 
   const generateData = () => {
     const dat = [];
@@ -32,9 +54,66 @@ const DashBoard = () => {
       });
       return dat;
     }
-  }
+  };
 
-  const data = generateData()
+  const data = generateData();
+  const columns: TableColumnsType<DataType> = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      render: (text: string) => <a>{text}</a>,
+    },
+    {
+      title: "Age",
+      dataIndex: "age",
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+    },
+  ];
+
+  const data1: DataType[] = [
+    {
+      key: "1",
+      name: "John Brown",
+      age: 32,
+      address: "New York No. 1 Lake Park",
+    },
+    // {
+    //   key: "2",
+    //   name: "Jim Green",
+    //   age: 42,
+    //   address: "London No. 1 Lake Park",
+    // },
+    // {
+    //   key: "3",
+    //   name: "Joe Black",
+    //   age: 32,
+    //   address: "Sydney No. 1 Lake Park",
+    // },
+    // {
+    //   key: "4",
+    //   name: "Disabled User",
+    //   age: 99,
+    //   address: "Sydney No. 1 Lake Park",
+    // },
+  ];
+
+  // rowSelection object indicates the need for row selection
+  const rowSelection = {
+    onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
+      console.log(
+        `selectedRowKeys: ${selectedRowKeys}`,
+        "selectedRows: ",
+        selectedRows
+      );
+    },
+    getCheckboxProps: (record: DataType) => ({
+      disabled: record.name === "Disabled User", // Column configuration not to be checked
+      name: record.name,
+    }),
+  };
 
   return (
     <Layout className="container">
@@ -175,6 +254,31 @@ const DashBoard = () => {
             </Card>
           </Space>
           <Divider />
+          <Card>
+              <Steps
+               current={1}
+               size="small"
+               items={[
+                 {
+                   title: 'Finished',
+                   description: 'This is a description.',
+                   icon: <UserOutlined />,
+                 },
+                 {
+                   title: 'In Progress',
+                   description : 'This is a description.',
+                   subTitle: 'Left 00:00:08',
+                 },
+                 {
+                   title: 'Waiting',
+                   description: 'This is a description.',
+                 },
+               ]}
+              />
+                
+            
+          </Card>
+          <Divider />
           {/* <Row gutter= {10}>
             <Col span={8}>
             <Card>
@@ -189,37 +293,70 @@ const DashBoard = () => {
           </Row> */}
           <Row>
             <Col span={18}>
-            <Table 
-            dataSource={data}
-            columns={[
-              {
-                title: "ID",
-                dataIndex: "id",
-                key: "id" 
-              },
-              {
-                title: "Name",
-                dataIndex: "name",
-                key: "name" 
+              <Table
+                //style={{ height: 500 }}
+                dataSource={data}
+                columns={[
+                  {
+                    title: "ID",
+                    dataIndex: "id",
+                    key: "id",
+                  },
+                  {
+                    title: "Name",
+                    dataIndex: "name",
+                    key: "name",
+                  },
+                  {
+                    title: "E-mail",
+                    dataIndex: "email",
+                    key: "email",
+                  },
+                  {
+                    title: "Status",
+                    dataIndex: "status",
+                    key: "status",
+                    render: (_: any, val: any) =>
+                      val ? (
+                        <Tag color="red">YES</Tag>
+                      ) : (
+                        <Tag color="blue">NO</Tag>
+                      ),
+                  },
+                ]}
+              />
+            </Col>
+          </Row>
+          <Divider />
+          <Row>
+            <Col span="17">
+              <div>
+                <Radio.Group
+                  onChange={({ target: { value } }) => {
+                    setSelectionType(value);
+                  }}
+                  value={selectionType}
+                >
+                  <Radio value="checkbox">Checkbox</Radio>
+                  <Radio value="radio">radio</Radio>
+                </Radio.Group>
 
-              },
-              {
-                title: "E-mail",
-                dataIndex: "email",
-                key: "email" 
-              },
-              {
-                title: "Status",
-                dataIndex: "status",
-                key: "status" 
-              }
-            ]}
-            />
+                <Divider />
+
+                <Table
+                  rowSelection={{
+                    type: selectionType,
+                    ...rowSelection,
+                  }}
+                  columns={columns}
+                  dataSource={data1}
+                />
+              </div>
             </Col>
           </Row>
         </Content>
       </Layout>
-      <Footer>Footer</Footer>
+      {/* <Footer>Footer</Footer> */}
     </Layout>
   );
 };
