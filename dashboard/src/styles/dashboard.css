@@ -14,5 +14,6 @@
 
 .content {
     padding: 23px;
+    overflow: auto;
 
 }

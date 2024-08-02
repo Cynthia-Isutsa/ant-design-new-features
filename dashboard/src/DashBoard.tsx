@@ -1,6 +1,7 @@
 import {
   ContactsFilled,
   DatabaseFilled,
+  FileAddFilled,
   HomeFilled,
   MenuFoldOutlined,
   MoneyCollectOutlined,
@@ -14,7 +15,9 @@ import {
   Col,
   DatePicker,
   Flex,
+  FloatButton,
   Layout,
+  List,
   Menu,
   Row,
   Space,
@@ -50,14 +53,21 @@ const DashBoard = () => {
   const [selectionType, setSelectionType] = useState<"checkbox" | "radio">(
     "checkbox"
   );
+  const data2 = [
+    'Racing car sprays burning fuel into crowd.',
+    'Japanese princess to wed commoner.',
+    'Australian walks 100km after outback crash.',
+    'Man charged over missing wedding girl.',
+    'Los Angeles battles huge wildfires.',
+  ];
 
   const generateData = () => {
     const dat = [];
 
     for (let i = 0; i < 34; i++) {
       dat.push({
-        id: faker.datatype.number(1000),
-        name: faker.name.fullName(),
+        id: faker.number.int(1000),
+        name:  faker.person.fullName(),
         email: faker.internet.email(),
         status: Math.random() > 0.5 ? true : false,
       });
@@ -371,6 +381,7 @@ defaultValue={defaultValue}
  onChange={onChange}
             
             /> */}
+
              <Space wrap size={16}>
       <Avatar size={64} icon={<UserOutlined />} />
       <Avatar size="large" icon={<UserOutlined />} />
@@ -380,6 +391,34 @@ defaultValue={defaultValue}
       <Avatar size = {64} src="https://cdn.openart.ai/workflow_thumbnails/XkQ6ccaLTt0PpWT5iH38/image_r5bvTvQW_1719360833005_raw.jpg" />
     </Space>
           </Flex>
+          <Row>
+            <List
+            size="large"
+            header={
+              <span>Header</span>
+            }
+            footer={
+              <span>Footer</span>
+            }
+            bordered
+            dataSource={data2}
+            renderItem={(item) => <List.Item>{item}</List.Item>}
+            />
+            <Divider />
+            <List
+      header={<div>Header</div>}
+      footer={<div>Footer</div>}
+      bordered
+      dataSource={data2}
+      renderItem={(item) => (
+        <List.Item>
+          <Typography.Text mark>[ITEM]</Typography.Text> {item}
+        </List.Item>
+      )}
+      
+    />
+    <FloatButton icon = {<FileAddFilled />} />
+          </Row>
         </Content>
       </Layout>
       {/* <Footer>Footer</Footer> */}
