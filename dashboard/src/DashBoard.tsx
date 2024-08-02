@@ -8,9 +8,12 @@ import {
 } from "@ant-design/icons";
 import "./styles/dashboard.css";
 import {
+  Avatar,
   Button,
   Card,
   Col,
+  DatePicker,
+  Flex,
   Layout,
   Menu,
   Row,
@@ -24,8 +27,9 @@ import Sider from "antd/es/layout/Sider";
 import { faker } from "@faker-js/faker";
 import React, { useState } from "react";
 import { Divider, Radio, Table } from "antd";
-import type { TableColumnsType } from "antd";
+import type { DatePickerProps, TableColumnsType } from "antd";
 import { Steps } from "antd";
+import dayjs, { Dayjs } from 'dayjs'
 
 interface DataType {
   key: React.Key;
@@ -35,6 +39,11 @@ interface DataType {
 }
 
 const { Text } = Typography;
+const defaultValue = [dayjs('2000-01-01'), dayjs('2000-01-03'), dayjs('2000-01-05')];
+const onChange: DatePickerProps<Dayjs[]>['onChange'] = (date, dateString) => {
+  console.log(date, dateString);
+};
+
 
 const DashBoard = () => {
   const [collasped, setCollasped] = useState<any>();
@@ -354,6 +363,23 @@ const DashBoard = () => {
               </div>
             </Col>
           </Row>
+          <Divider />
+          <Flex>
+            {/* <DatePicker 
+            multiple
+defaultValue={defaultValue}
+ onChange={onChange}
+            
+            /> */}
+             <Space wrap size={16}>
+      <Avatar size={64} icon={<UserOutlined />} />
+      <Avatar size="large" icon={<UserOutlined />} />
+      <Avatar icon={<UserOutlined />} />
+      <Avatar size="small" icon={<UserOutlined />} />
+      <Avatar size={14} icon={<UserOutlined />} />
+      <Avatar size = {64} src="https://cdn.openart.ai/workflow_thumbnails/XkQ6ccaLTt0PpWT5iH38/image_r5bvTvQW_1719360833005_raw.jpg" />
+    </Space>
+          </Flex>
         </Content>
       </Layout>
       {/* <Footer>Footer</Footer> */}
